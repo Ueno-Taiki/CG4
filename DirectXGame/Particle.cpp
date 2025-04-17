@@ -12,9 +12,10 @@ void Particle::Initialize(Model* model) {
 }
 
 void Particle::Update() {
-
+	// 行列を定数バッファに転送
+	worldTransform_.TransferMatrix();
 }
 
-void Particle::Draw() {
-
+void Particle::Draw(Camera& camera) {
+	model_->Draw(worldTransform_, camera);
 }

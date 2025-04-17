@@ -12,13 +12,13 @@ public:
 	void Update();
 
 	// 描画
-	void Draw();
+	void Draw(Camera& camera);
 
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	// モデル
-	Model *model_ = nullptr;
+	Model* model_ = nullptr;
 
 };
 
