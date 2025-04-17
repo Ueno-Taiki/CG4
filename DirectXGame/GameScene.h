@@ -21,7 +21,7 @@ private:
 	// パーティクル3Dモデルデータ
 	Model* modelParticle_ = nullptr;
 	// パーティクル
-	Particle* particle_ = nullptr;
+	std::list<Particle*> particles_;
 
 	// カメラ
 	Camera camera_;

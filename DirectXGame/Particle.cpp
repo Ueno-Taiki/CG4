@@ -2,12 +2,13 @@
 
 using namespace MathUtility;
 
-void Particle::Initialize(Model* model) {
+void Particle::Initialize(Model* model, Vector3 position) {
 	// NULLポインタチャック
 	assert(model);
 
 	// 引数として受け取ったデータをメンバ変数に記録する
 	model_ = model;
+	worldTransform_.translation_ = position;
 
 	//　色の設定
 	objectColor_.Initialize();
