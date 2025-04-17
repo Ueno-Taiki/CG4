@@ -1,9 +1,10 @@
 #include <algorithm>
 #include "Particle.h"
 
+using namespace KamataEngine;
 using namespace MathUtility;
 
-void Particle::Initialize(Model* model, Vector3 position, Vector3 velocity) {
+void Particle::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 velocity) {
 	// NULLポインタチャック
 	assert(model);
 
@@ -57,6 +58,6 @@ void Particle::Update() {
 	worldTransform_.UpdateMatrix();
 }
 
-void Particle::Draw(Camera& camera) {
+void Particle::Draw(KamataEngine::Camera& camera) {
 	model_->Draw(worldTransform_, camera, &objectColor_);
 }

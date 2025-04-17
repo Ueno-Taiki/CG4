@@ -1,6 +1,7 @@
 #include <random>
 #include "GameScene.h"
 
+using namespace KamataEngine;
 using namespace MathUtility;
 
 std::random_device seedGenerator;
@@ -69,7 +70,7 @@ void GameScene::Draw() {
 }
 
 // パーティクル発生
-void GameScene::ParticleBorn(Vector3 position) {
+void GameScene::ParticleBorn(KamataEngine::Vector3 position) {
 	// パーティクルの生成
 	for (int i = 0; i < 150; i++) {
 		// 生成
