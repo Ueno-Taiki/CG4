@@ -15,6 +15,9 @@ void Particle::Initialize(Model* model, Vector3 position, Vector3 velocity) {
 	objectColor_.Initialize();
 	color_ = { 1, 1, 0, 1 };
 
+	// 大きさ
+	radius_ = { 0.2f, 0.2f, 0.2f };
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 }
@@ -25,9 +28,8 @@ void Particle::Update() {
 
 	// 移動
 	worldTransform_.translation_ += velocity_;
-
-	// 大きさ
-	radius_ = { 0.2f, 0.2f, 0.2f };
+	// スケール
+	worldTransform_.scale_ = radius_;
 
 	// 行列を定数バッファに転送
 	worldTransform_.TransferMatrix();
