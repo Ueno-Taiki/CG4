@@ -1,6 +1,6 @@
 #pragma once
 #include "KamataEngine.h"
-#include "Particle.h"
+#include "Effect.h"
 
 class GameScene {
 public:
@@ -15,14 +15,11 @@ public:
 	// 描画
 	void Draw();
 
-	// パーティクル発生
-	void ParticleBorn(KamataEngine::Vector3 position);
-
 private:
-	// パーティクル3Dモデルデータ
-	KamataEngine::Model* modelParticle_ = nullptr;
-	// パーティクル
-	std::list<Particle*> particles_;
+	// エフェクト3Dモデルデータ
+	KamataEngine::Model* modelEffect_ = nullptr;
+	// エフェクト	
+	Effect* effect_ = nullptr;
 
 	// カメラ
 	KamataEngine::Camera camera_;
