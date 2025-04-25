@@ -1,12 +1,15 @@
 #include "Effect.h"
 
-void Effect::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 velocity) {
+using namespace KamataEngine;
+
+void Effect::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle) {
 	// NULLポインタチェック
 	assert(model);
 
 	// 引数として受け取ったデータをメンバ変数に記録する
 	model_ = model;
-	velocity_ = velocity;
+	radius_ = radius;
+	angle_ = angle;
 
 	// ワールドの初期化
 	worldTransform_.Initialize();

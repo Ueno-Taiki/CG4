@@ -4,7 +4,7 @@
 class Effect {
 public:
 	// 初期化
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 velocity);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle);
 
 	// 更新
 	void Update();
@@ -18,8 +18,6 @@ private:
 	// モデル
 	KamataEngine::Model* model_ = nullptr;
 
-	// 移動量
-	KamataEngine::Vector3 velocity_;
 	// 大きさ
 	KamataEngine::Vector3 radius_;
 	// 角度
