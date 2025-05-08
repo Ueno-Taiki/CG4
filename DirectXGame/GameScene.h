@@ -15,6 +15,9 @@ public:
 	// 描画
 	void Draw();
 
+	// エフェクト発生
+	void EffectBorn(KamataEngine::Vector3 position);
+
 private:
 	// エフェクト3Dモデルデータ
 	KamataEngine::Model* modelEffect_ = nullptr;
