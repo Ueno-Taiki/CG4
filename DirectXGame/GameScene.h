@@ -19,7 +19,7 @@ private:
 	// エフェクト3Dモデルデータ
 	KamataEngine::Model* modelEffect_ = nullptr;
 	// エフェクト	
-	Effect* effect_ = nullptr;
+	std::list<Effect*> effects_;
 
 	// カメラ
 	KamataEngine::Camera camera_;

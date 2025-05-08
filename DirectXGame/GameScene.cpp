@@ -11,6 +11,11 @@ std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 GameScene::~GameScene() {
 	// エフェクト解除
 	delete modelEffect_;
+	// エフェクトの解放
+	for (Effect* effect : effects_) {
+		delete effect;
+	}
+	effects_.clear();
 }
 
 void GameScene::Initialize() {
@@ -18,22 +23,27 @@ void GameScene::Initialize() {
 	modelEffect_ = Model::CreateFromOBJ("diamond", true);
 
 	// エフェクトの生成
-	effect_ = new Effect();
+	for (int i = 0; i < 150; i++) {
+		// 生成
+		Effect* effect = new Effect();
 
-	// 乱数設定
-	std::uniform_real_distribution<float> sizeDist(0.5f, 2.0f); 
-	std::uniform_real_distribution<float> angleDegDist(0.0f, 360.0f); 
+		// 乱数設定
+		std::uniform_real_distribution<float> sizeDist(0.5f, 2.0f);
+		std::uniform_real_distribution<float> angleDegDist(0.0f, 360.0f);
 
-	// 回転角度
-	float angleInDegrees = angleDegDist(randomEngine);
-	float angleInRadians = angleInDegrees * (3.14159265f / 180.0f);
+		// 回転角度
+		float angleInDegrees = angleDegDist(randomEngine);
+		float angleInRadians = angleInDegrees * (3.14159265f / 180.0f);
 
-	// 大きさ
-	Vector3 radius = { 1.0f, sizeDist(randomEngine), 1.0f };
-	// 角度
-	Vector3 angle = { 0, 0, angleInRadians };
-	// 初期化
-	effect_->Initialize(modelEffect_,radius,angle);
+		// 大きさ
+		Vector3 radius = { 1.0f, sizeDist(randomEngine), 1.0f };
+		// 角度
+		Vector3 angle = { 0, 0, angleInRadians };
+		// 初期化
+		effect->Initialize(modelEffect_, radius, angle);
+		// リストに追加
+		effects_.push_back(effect);
+	}
 
 	// カメラの初期化
 	camera_.Initialize();
@@ -41,7 +51,9 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 	// エフェクトを更新
-	effect_->Update();
+	for (Effect* effect : effects_) {
+		effect->Update();
+	}
 }
 
 void GameScene::Draw() {
@@ -52,7 +64,9 @@ void GameScene::Draw() {
 	Model::PreDraw(dxCommon->GetCommandList());
 
 	// エフェクトの描画
-	effect_->Draw(camera_);
+	for (Effect* effect : effects_) {
+		effect->Draw(camera_);
+	}
 
 	// 3Dモデル描画後処理
 	Model::PostDraw();
