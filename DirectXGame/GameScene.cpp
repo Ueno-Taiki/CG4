@@ -45,15 +45,6 @@ void GameScene::Initialize() {
 		effects_.push_back(effect);
 	}
 
-	// 終了フラグの立ったエフェクトを削除
-	effects_.remove_if([](Effect* effect) {
-		if (effect->IsFinished()) {
-			delete effect;
-			return true;
-		}
-		return false;
-	});
-
 	// カメラの初期化
 	camera_.Initialize();
 }
@@ -63,6 +54,15 @@ void GameScene::Update() {
 	for (Effect* effect : effects_) {
 		effect->Update();
 	}
+
+	// 終了フラグの立ったエフェクトを削除
+	effects_.remove_if([](Effect* effect) {
+		if (effect->IsFinished()) {
+			delete effect;
+			return true;
+		}
+		return false;
+	});
 }
 
 void GameScene::Draw() {

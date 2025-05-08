@@ -21,6 +21,11 @@ private:
 	// モデル
 	KamataEngine::Model* model_ = nullptr;
 
+	// 色変更オブジェクト
+	KamataEngine::ObjectColor objectColor_;
+	// 色の数値
+	KamataEngine::Vector4 color_;
+
 	// 大きさ
 	KamataEngine::Vector3 radius_;
 	// 角度
