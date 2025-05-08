@@ -9,8 +9,10 @@ std::mt19937 randomEngine(seedGenerator());
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
 GameScene::~GameScene() {
-	// エフェクト解除
+	// モデル解除
 	delete modelEffect_;
+	// エフェクト解除
+	delete effect_;
 }
 
 void GameScene::Initialize() {
