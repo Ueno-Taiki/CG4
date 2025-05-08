@@ -9,7 +9,7 @@ std::mt19937 randomEngine(seedGenerator());
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
 GameScene::~GameScene() {
-	// エフェクト解除
+	// モデル解除
 	delete modelEffect_;
 	// エフェクトの解放
 	for (Effect* effect : effects_) {
@@ -23,7 +23,7 @@ void GameScene::Initialize() {
 	modelEffect_ = Model::CreateFromOBJ("diamond", true);
 
 	// エフェクトの生成
-	for (int i = 0; i < 150; i++) {
+	for (int i = 0; i < 10; i++) {
 		// 生成
 		Effect* effect = new Effect();
 
@@ -36,7 +36,7 @@ void GameScene::Initialize() {
 		float angleInRadians = angleInDegrees * (3.14159265f / 180.0f);
 
 		// 大きさ
-		Vector3 radius = { 1.0f, sizeDist(randomEngine), 1.0f };
+		Vector3 radius = { 1.0f, sizeDist(randomEngine) * 5, 1.0f };
 		// 角度
 		Vector3 angle = { 0, 0, angleInRadians };
 		// 初期化
