@@ -22,14 +22,22 @@ void GameScene::Initialize() {
 	// 3Dモデルデータの作成
 	modelEffect_ = Model::CreateFromOBJ("diamond", true);
 
-	// エフェクトの生成
-	EffectBorn();
+	// 乱数の初期化
+	srand((unsigned)time(NULL));
 
 	// カメラの初期化
 	camera_.Initialize();
 }
 
 void GameScene::Update() {
+	// 確率で発生
+	if (rand() % 20 == 0) {
+		// 発生位置は乱数
+		Vector3 position = { distribution(randomEngine) * 30.0f, distribution(randomEngine) * 20.0f, 0 };
+		// エフェクトの生成
+		EffectBorn(position);
+	}
+
 	// エフェクトを更新
 	for (Effect* effect : effects_) {
 		effect->Update();
@@ -75,12 +83,15 @@ void GameScene::EffectBorn(KamataEngine::Vector3 position) {
 		float angleInDegrees = angleDegDist(randomEngine);
 		float angleInRadians = angleInDegrees * (3.14159265f / 180.0f);
 
+		// 位置
+		Vector3 Position = { 0.0f, 0.0f, 0.0f };
+		Position = position;
 		// 大きさ
 		Vector3 radius = { 1.0f, sizeDist(randomEngine) * 5, 1.0f };
 		// 角度
 		Vector3 angle = { 0, 0, angleInRadians };
 		// 初期化
-		effect->Initialize(modelEffect_, radius, angle);
+		effect->Initialize(modelEffect_, position, radius, angle);
 		// リストに追加
 		effects_.push_back(effect);
 	}

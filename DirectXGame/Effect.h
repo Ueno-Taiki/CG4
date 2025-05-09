@@ -4,7 +4,7 @@
 class Effect {
 public:
 	// 初期化
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle);
 
 	// 更新
 	void Update();
@@ -38,4 +38,3 @@ private:
 	// 存続時間
 	const float kDuration = 1.0f;
 };
-

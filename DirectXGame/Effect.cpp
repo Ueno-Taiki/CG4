@@ -2,13 +2,15 @@
 #include "Effect.h"
 
 using namespace KamataEngine;
+using namespace MathUtility;
 
-void Effect::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle) {
+void Effect::Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 radius, KamataEngine::Vector3 angle) {
 	// NULLポインタチェック
 	assert(model);
 
 	// 引数として受け取ったデータをメンバ変数に記録する
 	model_ = model;
+	worldTransform_.translation_ = position;
 	radius_ = radius;
 	angle_ = angle;
 
