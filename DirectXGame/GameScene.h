@@ -1,5 +1,6 @@
 #pragma once
 #include "KamataEngine.h"
+#include "Model2.h"
 
 class GameScene {
 public:
