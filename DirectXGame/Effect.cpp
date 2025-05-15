@@ -26,6 +26,8 @@ void Effect::Update() {
 	// 色変更オブジェクトに色の数値を設定する
 	objectColor_.SetColor(color_);
 
+	// 移動
+	worldTransform_.translation_ += {0.5f, 0.0f, 0.0f};
 	// 大きさ
 	worldTransform_.scale_ = radius_;
 	// 角度
@@ -37,10 +39,10 @@ void Effect::Update() {
 	}
 
 	//　カウンターを1フレーム分の秒数進める
-	counter_ += 1.0f / 60.0f;
+	counter_ += 1.0f / 120.0f;
 
 	// フェード処理
-	color_.w = std::clamp(1.0f - counter_ / kDuration, 0.0f, 1.0f);
+	color_.w = std::clamp(1.5f - counter_ / kDuration, 0.0f, 1.0f);
 
 	// 存続時間の上限に達したら
 	if (counter_ >= kDuration){
@@ -49,13 +51,15 @@ void Effect::Update() {
 		isFinished_ = true;
 	}
 
-	// 行列を定数バッファに転送
-	worldTransform_.TransferMatrix();
-
 	//　行列を更新
 	worldTransform_.UpdateMatrix();
 }
 
 void Effect::Draw(KamataEngine::Camera& camera) {
 	model_->Draw(worldTransform_, camera, &objectColor_);
+}
+
+// 色の設定
+void Effect::SetInitialColor(const KamataEngine::Vector4& color) {
+	color_ = color;
 }

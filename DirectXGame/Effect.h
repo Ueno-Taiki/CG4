@@ -12,6 +12,9 @@ public:
 	// 描画
 	void Draw(KamataEngine::Camera& camera);
 
+	// 色の設定
+	void SetInitialColor(const KamataEngine::Vector4& color);
+
 	// デスフラグのgetter
 	bool IsFinished() { return isFinished_; }
 
