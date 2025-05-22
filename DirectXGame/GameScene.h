@@ -4,6 +4,10 @@
 
 class GameScene {
 public:
+	GameScene();
+
+	~GameScene();
+
 	// 初期化
 	void Initialize();
 
@@ -12,5 +16,10 @@ public:
 
 	// 描画
 	void Draw();
+
+private:
+	// モデル
+	KamataEngine::Model* model_ = nullptr;
+	KamataEngine::Model2* model2_ = nullptr;
 };
 
