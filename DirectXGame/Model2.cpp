@@ -131,6 +131,47 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 	return instance;
 }
 
+// 四角形
+Model2* Model2::CreateSquare() {
+	// メモリ確保
+	Model2* instance = new Model2;
+	std::vector<Mesh::VertexPosNormalUv> vertices;
+	std::vector<uint32_t> indices;
+
+	// 頂点数
+	const uint32_t kNumSphereVertices = 4;
+	// インデックス数
+	const uint32_t kNumSphereIndices = 6;
+
+	vertices.resize(kNumSphereVertices);
+	indices.resize(kNumSphereIndices);
+
+	// 左下
+	vertices[0].pos = { -0.5f, -0.5f, 0.0f };
+	vertices[0].uv = { 0.0f, 1.0f };
+	vertices[0].normal = { 0.0f, 0.0f, 1.0f };
+	// 左上
+	vertices[1].pos = { -0.5f, 0.5f, 0.0f };
+	vertices[1].uv = { 0.0f, 0.0f };
+	vertices[1].normal = { 0.0f, 0.0f, 1.0f };
+	// 右下
+	vertices[2].pos = { 0.5f, -0.5f, 0.0f };
+	vertices[2].uv = { 1.0f, 1.0f };
+	vertices[2].normal = { 0.0f, 0.0f, 1.0f };
+	// 右上
+	vertices[3].pos = { 0.5f, 0.5f, 0.0f };
+	vertices[3].uv = { 1.0f, 0.0f };
+	vertices[3].normal = { 0.0f, 0.0f, 1.0f };
+
+	// インデックス
+	indices[0] = 0; indices[1] = 1; indices[2] = 2;
+	indices[3] = 1; indices[4] = 3; indices[5] = 2;
+
+	instance->InitializeFromVertices(vertices, indices);
+
+	return instance;
+}
+
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
 
 void Model2::PostDraw() { ModelCommon2::GetInstance()->PostDraw(); }
