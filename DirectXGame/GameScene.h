@@ -4,7 +4,6 @@
 
 class GameScene {
 public:
-	GameScene();
 
 	~GameScene();
 
@@ -18,8 +17,15 @@ public:
 	void Draw();
 
 private:
-	// モデル
-	KamataEngine::Model* model_ = nullptr;
-	KamataEngine::Model2* model2_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0;
+
+	// 3Dモデル
+	KamataEngine::Model2* model_ = nullptr;
+
+	// ワールドトランスフォーム
+	KamataEngine::WorldTransform worldTransform_;
+	// カメラ
+	KamataEngine::Camera camera_;
 };
 

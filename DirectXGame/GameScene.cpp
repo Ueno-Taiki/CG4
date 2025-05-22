@@ -2,20 +2,29 @@
 
 using namespace KamataEngine;
 
-GameScene::GameScene() { 
-	Model2::StaticInitialize();
-}
-
 GameScene::~GameScene() {
+	// 3Dモデルの解放
+	delete model_;
+
 	Model2::StaticFinalize();
 }
 
 void GameScene::Initialize() {
+	Model2::StaticInitialize();
 
+	// ファイル名を指定してテクスチャを読み込む
+	textureHandle_ = TextureManager::Load("uvChecker.png");
+
+	// 3Dモデルの生成
+	model_ = Model2::Create();
+
+	// ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+	// カメラの初期化
+	camera_.Initialize();
 }
 
 void GameScene::Update() {
-
 }
 
 void GameScene::Draw() {
@@ -23,8 +32,11 @@ void GameScene::Draw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	// 3Dモデル描画前処理
-	Model::PreDraw(dxCommon->GetCommandList());
+	Model2::PreDraw(dxCommon->GetCommandList());
+
+	// モデル描画
+	model_->Draw(worldTransform_, camera_, textureHandle_);
 
 	// 3Dモデル描画後処理
-	Model::PostDraw();
+	Model2::PostDraw();
 }
