@@ -31,7 +31,7 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 	// 確率で発生
-	if (rand() % 20 == 0) {
+	if (rand() % 10 == 0) {
 		// 発生位置は乱数
 		Vector3 position = { -30.0f, 0.0f, 0 };
 		// パーティクル発生
@@ -72,32 +72,45 @@ void GameScene::Draw() {
 // エフェクト発生
 void GameScene::EffectBorn(KamataEngine::Vector3 position) {
 	std::uniform_real_distribution<float> sizeDist(0.5f, 2.0f);
-	std::uniform_real_distribution<float> angleRadDist(0.0f, 2.0f * 3.14159265f);
 	std::uniform_real_distribution<float> colorDist(0.0f, 1.0f); // 色用のランダム分布
+
+	const int effectCount = 10;
+	const float radiusDistance = 5.0f; // 中心からの距離
+	const float angleStep = 2.0f * 3.14159265f / effectCount;
+
+	// ランダムな色の生成
+	Vector4 initialColor = {
+		colorDist(randomEngine),
+		colorDist(randomEngine),
+		colorDist(randomEngine),
+		1.0f
+	};
 
 	for (int i = 0; i < 10; i++) {
 		// 生成
 		Effect* effect = new Effect();
 
-		// 回転角度 (ラジアン)
-		float angleInRadians = angleRadDist(randomEngine);
+		// 放射状に配置する角度
+		float angleRad = i * angleStep;
 	
-		// 位置
-		Vector3 Position = position;
+		// 星型（放射状）にオフセットされた位置
+		Vector3 offset = {
+			std::cos(angleRad) * radiusDistance,
+			0.0f,
+			std::sin(angleRad) * radiusDistance
+		};
+
+		Vector3 effectPosition = {
+			position.x + offset.x,
+			position.y + offset.y,
+			position.z + offset.z
+		};
 
 		// 大きさ
 		Vector3 radius = { 1.0f, sizeDist(randomEngine) * 5, 1.0f };
 
 		// 角度
-		Vector3 angle = { 0, 0, angleInRadians };
-
-		// ランダムな色の生成
-		Vector4 initialColor = {
-			colorDist(randomEngine), 
-			colorDist(randomEngine), 
-			colorDist(randomEngine), 
-			1.0f                     
-		};
+		Vector3 angle = { 0, 0, angleRad };
 
 		// 初期化
 		effect->Initialize(modelEffect_, position, radius, angle);

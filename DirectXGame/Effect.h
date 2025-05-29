@@ -40,4 +40,8 @@ private:
 	float counter_ = 0.0f;
 	// 存続時間
 	const float kDuration = 1.0f;
+
+	bool startedTransform_ = false; // x が 0 になったか判定
+	float angleSpeed_ = 0.1f;
+	KamataEngine::Vector3 scaleGrowRate_ = { 0.02f, 0.02f, 0.02f };
 };
