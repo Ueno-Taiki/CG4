@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include "Effect.h"
 
 using namespace KamataEngine;
