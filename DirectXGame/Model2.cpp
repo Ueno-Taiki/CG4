@@ -132,7 +132,9 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 }
 
 // 四角形
-Model2* Model2::CreateSquare() {
+std::vector<Model2*> Model2::CreateSquare() {
+	std::vector<Model2*> squares;
+
 	for (int i = 0; i < 5; i++) {
 		// メモリ確保
 		Model2* instance = new Model2;
@@ -169,9 +171,9 @@ Model2* Model2::CreateSquare() {
 		indices[3] = 1; indices[4] = 3; indices[5] = 2;
 
 		instance->InitializeFromVertices(vertices, indices);
-
-		return instance;
+		squares.push_back(instance);
 	}
+	return	squares;
 }
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
