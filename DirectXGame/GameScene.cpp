@@ -4,10 +4,7 @@ using namespace KamataEngine;
 
 GameScene::~GameScene() {
 	// 3Dモデルの解放
-	for (Model2* model : models_) {
-		delete model;
-	}
-	models_.clear();
+	delete model_;
 
 	Model2::StaticFinalize();
 }
@@ -19,15 +16,10 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("uvChecker.png");
 
 	// 3Dモデルの生成
-	models_ = Model2::CreateSquare();
+	model_ = Model2::CreateSquare(5);
 
 	// ワールドトランスフォームの初期化
-	worldTransforms_.resize(models_.size());
-	for (size_t i = 0; i < models_.size(); ++i) {
-		worldTransforms_[i].translation_ = { static_cast<float>(i) * 2.0f, 0.0f, 0.0f }; // X方向に間隔を空けて配置
-		worldTransforms_[i].Initialize();
-	}
-
+	worldTransforms_.Initialize();
 	// カメラの初期化
 	camera_.Initialize();
 }
@@ -43,9 +35,7 @@ void GameScene::Draw() {
 	Model2::PreDraw(dxCommon->GetCommandList());
 
 	// モデル描画
-	for (size_t i = 0; i < models_.size(); ++i) {
-		models_[i]->Draw(worldTransforms_[i], camera_);
-	}
+	model_->Draw(worldTransforms_, camera_, textureHandle_);
 
 	// 3Dモデル描画後処理
 	Model2::PostDraw();

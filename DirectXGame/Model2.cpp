@@ -132,48 +132,50 @@ Model2* Model2::CreateSphere(uint32_t divisionVertial, uint32_t divisionHorizont
 }
 
 // 四角形
-std::vector<Model2*> Model2::CreateSquare() {
-	std::vector<Model2*> squares;
+Model2* Model2::CreateSquare(int count) {
+	// メモリ確保
+	Model2* instance = new Model2;
+	std::vector<Mesh::VertexPosNormalUv> vertices;
+	std::vector<uint32_t> indices;
 
-	for (int i = 0; i < 5; i++) {
-		// メモリ確保
-		Model2* instance = new Model2;
-		std::vector<Mesh::VertexPosNormalUv> vertices;
-		std::vector<uint32_t> indices;
+	const float squareSize = 1.0f; // 四角形1枚の幅
+	vertices.resize(count * 4);
+	indices.resize(count * 6);
 
-		// 頂点数
-		const uint32_t kNumSphereVertices = 4;
-		// インデックス数
-		const uint32_t kNumSphereIndices = 6;
+	for (int i = 0; i < count; ++i) {
+		float offsetX = i * squareSize;
 
-		vertices.resize(kNumSphereVertices);
-		indices.resize(kNumSphereIndices);
+		// 各四角形の4頂点
+		int vi = i * 4;
+		vertices[vi + 0].pos = { offsetX - 0.5f, -0.5f, 0.0f };
+		vertices[vi + 0].uv = { 0.0f, 1.0f };
+		vertices[vi + 0].normal = { 0.0f, 0.0f, 1.0f };
 
-		// 左下
-		vertices[0].pos = { -0.5f, -0.5f, 0.0f };
-		vertices[0].uv = { 0.0f, 1.0f };
-		vertices[0].normal = { 0.0f, 0.0f, 1.0f };
-		// 左上
-		vertices[1].pos = { -0.5f, 0.5f, 0.0f };
-		vertices[1].uv = { 0.0f, 0.0f };
-		vertices[1].normal = { 0.0f, 0.0f, 1.0f };
-		// 右下
-		vertices[2].pos = { 0.5f, -0.5f, 0.0f };
-		vertices[2].uv = { 1.0f, 1.0f };
-		vertices[2].normal = { 0.0f, 0.0f, 1.0f };
-		// 右上
-		vertices[3].pos = { 0.5f, 0.5f, 0.0f };
-		vertices[3].uv = { 1.0f, 0.0f };
-		vertices[3].normal = { 0.0f, 0.0f, 1.0f };
+		vertices[vi + 1].pos = { offsetX - 0.5f, 0.5f, 0.0f };
+		vertices[vi + 1].uv = { 0.0f, 0.0f };
+		vertices[vi + 1].normal = { 0.0f, 0.0f, 1.0f };
 
-		// インデックス
-		indices[0] = 0; indices[1] = 1; indices[2] = 2;
-		indices[3] = 1; indices[4] = 3; indices[5] = 2;
+		vertices[vi + 2].pos = { offsetX + 0.5f, -0.5f, 0.0f };
+		vertices[vi + 2].uv = { 1.0f, 1.0f };
+		vertices[vi + 2].normal = { 0.0f, 0.0f, 1.0f };
 
-		instance->InitializeFromVertices(vertices, indices);
-		squares.push_back(instance);
+		vertices[vi + 3].pos = { offsetX + 0.5f, 0.5f, 0.0f };
+		vertices[vi + 3].uv = { 1.0f, 0.0f };
+		vertices[vi + 3].normal = { 0.0f, 0.0f, 1.0f };
+
+		// 各四角形のインデックス
+		int ii = i * 6;
+		indices[ii + 0] = vi + 0;
+		indices[ii + 1] = vi + 1;
+		indices[ii + 2] = vi + 2;
+		indices[ii + 3] = vi + 1;
+		indices[ii + 4] = vi + 3;
+		indices[ii + 5] = vi + 2;
 	}
-	return	squares;
+
+	instance->InitializeFromVertices(vertices, indices);
+
+	return instance;
 }
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
