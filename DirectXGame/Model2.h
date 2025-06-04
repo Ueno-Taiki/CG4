@@ -140,6 +140,9 @@ public: // 静的メンバ関数
 	// 四角形生成
 	static Model2* CreateSquare(int count);
 
+	// リング生成
+	static Model2* CreateRing(int count);
+
 	/// <summary>
 	/// 描画前処理
 	/// </summary>

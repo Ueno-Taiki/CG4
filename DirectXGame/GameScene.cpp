@@ -16,7 +16,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("uvChecker.png");
 
 	// 3Dモデルの生成
-	model_ = Model2::CreateSquare(5);
+	model_ = Model2::CreateRing(10);
 
 	// ワールドトランスフォームの初期化
 	worldTransforms_.Initialize();

@@ -178,6 +178,30 @@ Model2* Model2::CreateSquare(int count) {
 	return instance;
 }
 
+// リング
+Model2* Model2::CreateRing(int count) {
+	const uint32_t kRingDivide = 32;
+	const float kOuterRadius = 1.0f;
+	const float kInnerRadius = 0.2f;
+	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(kRingDivide);
+
+	for (uint32_t index = 0; index < kRingDivide; ++index) {
+		float sin = std::sin(index * radianPerDivide);
+		float cos = std::cos(index * radianPerDivide);
+		float sinNext = std::sin((index * 1) * radianPerDivide);
+		float conNext = std::cos((index * 1) * radianPerDivide);
+		float u = float(index) / float(kRingDivide);
+		float uNext = float(index * 1) / float(kRingDivide);
+		// positionとuv。 normalは必要なら+zを設定する
+		{ -sin * kOuterRadius, cos * kOuterRadius, 0.0f, 1.0f; } { u, 0.0f; }
+		{ -sinNext * kOuterRadius, conNext* kOuterRadius, 0.0f, 1.0f; } { uNext, 0.0f; }
+		{ -sin * kInnerRadius, cos* kInnerRadius, 0.0f, 1.0f; } { u, 1.0f; }
+		{ -sinNext * kInnerRadius, conNext* kInnerRadius, 0.0f, 1.0f; } { uNext, 1.0f; }
+	}
+
+	return nullptr;
+}
+
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
 
 void Model2::PostDraw() { ModelCommon2::GetInstance()->PostDraw(); }
