@@ -1,4 +1,4 @@
-//#include <3d\Model.h>
+#include <3d\Model.h>
 #include <3d\Camera.h>
 #include <base\DirectXCommon.h>
 #include <3d\Material.h>
@@ -180,26 +180,54 @@ Model2* Model2::CreateSquare(int count) {
 
 // リング
 Model2* Model2::CreateRing(int count) {
-	const uint32_t kRingDivide = 32;
+	// メモリ確保
+	Model2* instance = new Model2;
+	std::vector<Mesh::VertexPosNormalUv> vertices;
+	std::vector<uint32_t> indices;
+
 	const float kOuterRadius = 1.0f;
 	const float kInnerRadius = 0.2f;
-	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(kRingDivide);
+	const float radianPerDivide = 2.0f * std::numbers::pi_v<float> / float(count);
 
-	for (uint32_t index = 0; index < kRingDivide; ++index) {
-		float sin = std::sin(index * radianPerDivide);
-		float cos = std::cos(index * radianPerDivide);
-		float sinNext = std::sin((index * 1) * radianPerDivide);
-		float conNext = std::cos((index * 1) * radianPerDivide);
-		float u = float(index) / float(kRingDivide);
-		float uNext = float(index * 1) / float(kRingDivide);
-		// positionとuv。 normalは必要なら+zを設定する
-		{ -sin * kOuterRadius, cos * kOuterRadius, 0.0f, 1.0f; } { u, 0.0f; }
-		{ -sinNext * kOuterRadius, conNext* kOuterRadius, 0.0f, 1.0f; } { uNext, 0.0f; }
-		{ -sin * kInnerRadius, cos* kInnerRadius, 0.0f, 1.0f; } { u, 1.0f; }
-		{ -sinNext * kInnerRadius, conNext* kInnerRadius, 0.0f, 1.0f; } { uNext, 1.0f; }
+	for (int i = 0; i < count; ++i) {
+		float angle = i * radianPerDivide;
+		float nextAngle = (i + 1) * radianPerDivide;
+
+		// sin/cos 計算
+		float sinA = std::sin(angle);
+		float cosA = std::cos(angle);
+		float sinB = std::sin(nextAngle);
+		float cosB = std::cos(nextAngle);
+
+		float u = float(i) / float(count);
+		float uNext = float(i + 1) / float(count);
+
+		// 頂点データ（外→内、現在→次の順）
+		Mesh::VertexPosNormalUv v0 = { { -cosA * kOuterRadius, sinA * kOuterRadius, 0.0f }, { 0.0f, 0.0f, 1.0f }, { u, 0.0f } };
+		Mesh::VertexPosNormalUv v1 = { { -cosB * kOuterRadius, sinB * kOuterRadius, 0.0f }, { 0.0f, 0.0f, 1.0f }, { uNext, 0.0f } };
+		Mesh::VertexPosNormalUv v2 = { { -cosA * kInnerRadius, sinA * kInnerRadius, 0.0f }, { 0.0f, 0.0f, 1.0f }, { u, 1.0f } };
+		Mesh::VertexPosNormalUv v3 = { { -cosB * kInnerRadius, sinB * kInnerRadius, 0.0f }, { 0.0f, 0.0f, 1.0f }, { uNext, 1.0f } };
+
+		uint32_t baseIndex = static_cast<uint32_t>(vertices.size());
+		vertices.push_back(v0); // 0
+		vertices.push_back(v1); // 1
+		vertices.push_back(v2); // 2
+		vertices.push_back(v3); // 3
+
+		// インデックス（四角形 → 三角形2枚）
+		indices.push_back(baseIndex);     // v0
+		indices.push_back(baseIndex + 1); // v1
+		indices.push_back(baseIndex + 2); // v2
+
+		indices.push_back(baseIndex + 2); // v2
+		indices.push_back(baseIndex + 1); // v1
+		indices.push_back(baseIndex + 3); // v3
 	}
 
-	return nullptr;
+	// モデル初期化
+	instance->InitializeFromVertices(vertices, indices);
+
+	return instance;
 }
 
 void Model2::PreDraw(ID3D12GraphicsCommandList* commandList) { ModelCommon2::GetInstance()->PreDraw(commandList); }
