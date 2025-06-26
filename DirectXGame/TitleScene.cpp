@@ -9,6 +9,7 @@ float EaseOutQuad(float x) {
 }
 
 TitleScene::~TitleScene() { 
+	// 解放処理
 	for (int i = 0; i < 3; i++) {
 		delete sprite_[i];
 	}
