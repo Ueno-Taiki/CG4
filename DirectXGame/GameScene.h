@@ -1,6 +1,7 @@
 #pragma once
 #include "KamataEngine.h"
 #include "Player.h"
+#include "GraphBar.h"
 
 class GameScene {
 public:
@@ -30,6 +31,9 @@ private:
 	Player* player_ = nullptr;
 	// プレイヤーモデル
 	KamataEngine::Model* modelPlayer_ = nullptr;
+
+	// 体力バー
+	GraphBar* graphBar_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_[2];

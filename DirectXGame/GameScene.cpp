@@ -29,6 +29,11 @@ void GameScene::Initialize() {
 	// プレイヤーの初期化
 	player_->Initialize(modelPlayer_, positon);
 
+	// 体力バーの生成
+	graphBar_ = new GraphBar();
+	// 体力バーの初期化
+	graphBar_->Initialize();
+
 	// スプライトの生成
 	sprite_[0] = Sprite::Create(textureHandle_[0], { 0, 0 });
 	sprite_[1] = Sprite::Create(textureHandle_[1], { 0, 0 });
@@ -58,6 +63,9 @@ void GameScene::Update() {
 
 	// プレイヤー更新
 	player_->Update();
+
+	// 体力バー更新
+	graphBar_->Update();
 
 	// 行列を更新
 	worldTransfrom_.UpdateMatrix();
@@ -92,7 +100,7 @@ void GameScene::Draw() {
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
 	// ここに2Dスプライトの描画処理を記述する
-
+	graphBar_->Draw();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

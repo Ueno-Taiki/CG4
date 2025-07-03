@@ -26,8 +26,8 @@ void TitleScene::Initialize() {
 
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_[0] = TextureManager::Load("Title.png");
-	textureHandle_[1] = TextureManager::Load("Moji1.png");
-	textureHandle_[2] = TextureManager::Load("Moji2.png");
+	textureHandle_[1] = TextureManager::Load("UI/Moji1.png");
+	textureHandle_[2] = TextureManager::Load("UI/Moji2.png");
 
 	// スプライトの生成
 	sprite_[0] = Sprite::Create(textureHandle_[0], {0, 0});
