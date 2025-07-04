@@ -15,7 +15,7 @@ public:
 
 	// 描画
 	void Draw();
-
+	
 private:
 	KamataEngine::DirectXCommon* dxCommon_ = nullptr;
 	KamataEngine::Input* input_ = nullptr;

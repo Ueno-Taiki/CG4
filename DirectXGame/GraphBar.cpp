@@ -26,8 +26,8 @@ void GraphBar::Initialize() {
 
 	// スプライトの生成
 	sprite_[0] = Sprite::Create(textureHandle_[0], { 100, 20 });
-	sprite_[1] = Sprite::Create(textureHandle_[1], { 100, 20 });
-	sprite_[2] = Sprite::Create(textureHandle_[2], { 100, 20 });
+	sprite_[1] = Sprite::Create(textureHandle_[1], { 116, 35 });
+	sprite_[2] = Sprite::Create(textureHandle_[2], { 116, 35 });
 }
 
 void GraphBar::Update() { 
@@ -42,7 +42,9 @@ void GraphBar::Update() {
 		spriteSize.x -= shrinkSpeed;
 
 		// 最小サイズに制限
-		if (spriteSize.x < 0) spriteSize.x = 0;
+		if (spriteSize.x < 0) {
+			spriteSize.x = 0;
+		}
 
 		// 位置は変えない
 		sprite_[2]->SetSize(spriteSize);
